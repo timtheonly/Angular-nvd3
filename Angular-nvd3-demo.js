@@ -4,10 +4,18 @@
 
 
 angular.module('Angular-nvd3-demo',['Angular-nvd3'])
-    .controller('examples',['$scope',function($scope){
+    .controller('bar',['$scope',function($scope){
         $scope.data = [
             {
-                values:[[1,1],[2,4]]
+                values:[[1,2,3],[2,4,6]]
             }
-        ]
+        ];
+
+        $scope.barX= function(){
+            return function(d){return d[1]};
+        };
+
+        $scope.barY = function(){
+            return function(d){return d[2]};
+        };
     }]);

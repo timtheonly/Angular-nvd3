@@ -1,6 +1,11 @@
 /**
  * Created by Daniel on 01/06/2014.
  */
+var dev = true;
+if(dev){
+    nv.dev = true;
+}
+
 function createChart(scope, chart, attrs){
     if(angular.isArray(scope.data) && scope.data.length === 0)//don't show a empty graph
     {
@@ -27,7 +32,9 @@ angular.module('Angular-nvd3',[])
             scope:{
                 data:'=',
                 width:'=',
-                height:'='
+                height:'=',
+                funcY:'&',
+                funcX:'&'
             },
             link: function(scope,element,attrs){
                 scope.$watch('data',function(newValue){
@@ -36,8 +43,10 @@ angular.module('Angular-nvd3',[])
                     }
                     nv.addGraph(function(){
                         var chart = nv.models.discreteBarChart()
-                            .x(function(d){return d[0]})
-                            .y(function(d){return d[1]});
+                            .height(attrs.height === undefined ? 100 : scope.height)
+                            .width(attrs.width === undefined ? 100 : scope.width)
+                            .x(attrs.funcX === undefined ? function(d){return d[0]}: scope.funcX())
+                            .y(attrs.funcY === undefined ? function(d){return d[1]}: scope.funcY());
                         createChart(scope,chart,attrs);
                         scope.chart =chart;
                         return chart;
