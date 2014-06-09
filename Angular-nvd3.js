@@ -34,7 +34,8 @@ angular.module('Angular-nvd3',[])
                 width:'=',
                 height:'=',
                 funcY:'&',
-                funcX:'&'
+                funcX:'&',
+                tooltips:'='
             },
             link: function(scope,element,attrs){
                 scope.$watch('data',function(newValue){
@@ -46,7 +47,8 @@ angular.module('Angular-nvd3',[])
                             .height(attrs.height === undefined ? 100 : scope.height)
                             .width(attrs.width === undefined ? 100 : scope.width)
                             .x(attrs.funcX === undefined ? function(d){return d[0]}: scope.funcX())
-                            .y(attrs.funcY === undefined ? function(d){return d[1]}: scope.funcY());
+                            .y(attrs.funcY === undefined ? function(d){return d[1]}: scope.funcY())
+                            .tooltips(attrs.tooltips == undefined ? false : (scope.tooltips === true));
                         createChart(scope,chart,attrs);
                         scope.chart =chart;
                         return chart;
